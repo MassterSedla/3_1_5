@@ -9,6 +9,7 @@
 <table align="center" border="2" bgcolor="aqua" width="60%">
   <thead>
   <tr>
+    <th>Username</th>
     <th>Name</th>
     <th>Last name</th>
     <th>Age</th>
@@ -20,20 +21,21 @@
     <th align="center" colspan="5">No users at database</th>
   </tr>
   <tr th:each="user: ${users}" align="center">
+    <td><a th:text="${user.getUsername()}" th:href="@{/user/{id}(id=${user.getId()})}">user</a></td>
     <td th:text="${user.getName()}"></td>
     <td th:text="${user.getLastName()}"/>
     <td th:text="${user.getAge()}"/>
-    <td><form th:action="@{/users/{id}/edit(id=${user.getId()})}">
+    <td><form th:action="@{/admin/user/{id}/edit(id=${user.getId()})}">
       <input type="submit" value="update"/>
     </form></td>
-    <td><form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+    <td><form th:method="DELETE" th:action="@{/admin/user/{id}(id=${user.getId()})}">
       <input type="submit" value="delete"/>
     </form></td>
 
   </tr>
   </tbody>
 </table>
-<form th:action="@{users/new}">
+<form th:action="@{/admin/new}">
   <input type="submit" value="Add new user"/>
 </form>
 </body>

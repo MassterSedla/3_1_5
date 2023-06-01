@@ -3,57 +3,24 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.User;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-@Controller
-@RequestMapping("/users")
-public class UsersController {
+import java.security.Principal;
 
-    private final UserService userService;
+@Controller
+@RequestMapping("/user")
+public class UsersController {
+    private final UserService userServiceImpl;
 
     @Autowired
-    public UsersController(UserService userService) {
-        this.userService = userService;
+    public UsersController(UserService userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
-
     @GetMapping()
-    public String printUsers(ModelMap model) {
-        model.addAttribute("users", userService.getAllUsers());
-        return "users/users";
+    public String user(Principal principal, ModelMap model) {
+        model.addAttribute("user", userServiceImpl.findByUsername(principal.getName()));
+        return "user";
     }
-
-    @GetMapping("/new")
-    public String addNewUser(ModelMap model) {
-        model.addAttribute("user", new User());
-        return "users/new";
-    }
-
-    @PostMapping()
-    public String saveUser(@ModelAttribute("user") User user) {
-        userService.addUser(user);
-        return "redirect:/users";
-    }
-
-    @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") int id, ModelMap model){
-        model.addAttribute("user", userService.showUser(id));
-        return "users/edit";
-    }
-
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id){
-        user.setId(id);
-        userService.addUser(user);
-        return "redirect:/users";
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public String removeUser(@ModelAttribute("id") int id) {
-        userService.removeUser(id);
-        return "redirect:/users";
-    }
-
 }
-
