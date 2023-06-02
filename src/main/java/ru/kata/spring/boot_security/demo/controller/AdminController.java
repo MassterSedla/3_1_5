@@ -60,6 +60,5 @@ public class AdminController {
         userServiceImpl.removeUser(id);
         return "redirect:/admin";
     }
-
 }
 

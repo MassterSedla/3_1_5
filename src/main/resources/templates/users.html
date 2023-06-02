@@ -6,6 +6,7 @@
   <title></title>
 </head>
 <body>
+<div th:insert="~{edit :: out}"></div>
 <table align="center" border="2" bgcolor="aqua" width="60%">
   <thead>
   <tr>
@@ -21,7 +22,7 @@
     <th align="center" colspan="5">No users at database</th>
   </tr>
   <tr th:each="user: ${users}" align="center">
-    <td><a th:text="${user.getUsername()}" th:href="@{/user/{id}(id=${user.getId()})}">user</a></td>
+      <td><a th:text="${user.getUsername()}" th:href="@{/admin/user/{id}(id=${user.getId()})}">user</a></td>
     <td th:text="${user.getName()}"></td>
     <td th:text="${user.getLastName()}"/>
     <td th:text="${user.getAge()}"/>

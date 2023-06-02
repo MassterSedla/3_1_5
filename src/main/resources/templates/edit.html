@@ -6,6 +6,10 @@
   <title></title>
 </head>
 <body>
+<form th:fragment="out" th:action="@{/logout}">
+  <input type="submit" value="logout">
+</form>
+
 <form th:method="PATCH" th:action="@{/admin/user/{id}(id=${user.getId()})}" th:object="${user}">
   <input type="hidden" th:field="*{username}" id="username"/>
   <br/>

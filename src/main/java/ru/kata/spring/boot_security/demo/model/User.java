@@ -26,10 +26,7 @@ public class User implements UserDetails {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable (name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Set<Role> roles;
 
 
@@ -37,10 +34,13 @@ public class User implements UserDetails {
 
     }
 
-    public User(String name, String lastName, int age) {
+    public User(String name, String lastName, int age, String username, String password, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
     }
 
     public int getId() {

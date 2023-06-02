@@ -6,6 +6,7 @@
   <title></title>
 </head>
 <body>
+<div th:insert="~{edit :: out}"></div>
 <form th:action="@{/admin}" th:method="POST" th:object="${user}"><br><br>
   <label for="name">Username: </label>
   <input th:field="*{username}" type="text" id="username"/>

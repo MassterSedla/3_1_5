@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
+    @Transactional
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public boolean addUser(User user) {
         if (userRepository.findByUsername(user.getUsername()) == null) {
-            user.setRoles(Collections.singleton(new Role("USER_ROLE")));
+            user.setRoles(Collections.singleton(new Role("ROLE_USER")));
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             return true;

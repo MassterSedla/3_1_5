@@ -6,7 +6,7 @@
     <title></title>
 </head>
 <body>
-
+    <div th:insert="~{edit :: out}"></div>
     <label for="username">Username: </label>
     <p th:text="${user.getUsername()}" id="username">username</p>
     <br/>
