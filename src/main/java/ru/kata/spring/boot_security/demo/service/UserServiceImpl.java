@@ -44,7 +44,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public boolean addUser(User user) {
         if (userRepository.findByUsername(user.getUsername()) == null) {
-            user.setRoles(Collections.singleton(new Role("ROLE_USER")));
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             return true;
@@ -54,15 +53,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Transactional
     public void updateUser(User user) {
-        User oldUser = userRepository.findByUsername(user.getUsername());
-        user.setRoles(oldUser.getRoles());
-        user.setPassword(oldUser.getPassword());
+        if (user.getPassword().equals("")) {
+            user.setPassword(showUser(user.getId()).getPassword());
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        user.setUsername(showUser(user.getId()).getUsername());
         userRepository.save(user);
     }
 
     @Transactional
     public User showUser(int id) {
-        return userRepository.getOne(id);
+        User user = userRepository.getOne(id);
+        return user;
     }
 
     @Transactional

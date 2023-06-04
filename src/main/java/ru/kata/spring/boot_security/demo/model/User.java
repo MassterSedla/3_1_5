@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,7 +27,7 @@ public class User implements UserDetails {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Set<Role> roles;
 
 
@@ -122,5 +123,14 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
+    }
+
+    public String getRolesToString() {
+        List<Role> list = getRoles().stream().toList();
+        StringBuilder str = new StringBuilder(list.get(0).toString());
+        if (list.size() == 2) {
+            str.append(" ").append(list.get(1).toString());
+        }
+        return String.valueOf(str);
     }
 }
