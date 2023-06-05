@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User showUser(int id) {
         User user = userRepository.getOne(id);
         return user;
