@@ -11,61 +11,57 @@ import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/")
 public class AdminController {
 
     private final UserServiceImpl userServiceImpl;
-    private final RoleServiceImpl roleServiceImpl;
+//    private final RoleServiceImpl roleServiceImpl;
 
     @Autowired
-    public AdminController(UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl) {
+    public AdminController(UserServiceImpl userServiceImpl/*, RoleServiceImpl roleServiceImpl*/) {
         this.userServiceImpl = userServiceImpl;
-        this.roleServiceImpl = roleServiceImpl;
+//        this.roleServiceImpl = roleServiceImpl;
     }
 
-    @GetMapping()
+    @GetMapping("/page")
     public String printUsers(ModelMap model, Principal principal) {
         model.addAttribute("userAuth", userServiceImpl.findByUsername(principal.getName()));
-        model.addAttribute("users", userServiceImpl.getAllUsers());
-        model.addAttribute("roles", roleServiceImpl.getAllRoles());
-        model.addAttribute("newUser", new User());
         return "index";
     }
-
+//
 //    @GetMapping("/new")
 //    public String addNewUser(ModelMap model) {
 //        model.addAttribute("user", new User());
 //        return "new";
 //    }
-
+//
 //    @GetMapping("/user/{id}")
 //    public String show(@PathVariable("id") int id, ModelMap model) {
 //        model.addAttribute("user", userServiceImpl.showUser(id));
 //        return "user";
 //    }
-
-    @PostMapping()
-    public String saveUser(@ModelAttribute("user") User user) {
-        userServiceImpl.addUser(user);
-        return "redirect:/";
-    }
-
+//
+//    @PostMapping()
+//    public String saveUser(@ModelAttribute("user") User user) {
+//        userServiceImpl.addUser(user);
+//        return "redirect:/";
+//    }
+//
 //    @GetMapping("/user/{id}/edit")
 //    public String edit(@PathVariable("id") int id, ModelMap model){
 //        model.addAttribute("user", userServiceImpl.showUser(id));
 //        return "edit";
 //    }
-
-    @PatchMapping("/user/{id}")
-    public String update(@ModelAttribute("user") User user){
-        userServiceImpl.updateUser(user);
-        return "redirect:/";
-    }
-
-    @DeleteMapping(value = "/user/{id}")
-    public String removeUser(@PathVariable("id") int id) {
-        userServiceImpl.removeUser(id);
-        return "redirect:/";
-    }
+//
+//    @PatchMapping("/user/{id}")
+//    public String update(@ModelAttribute("user") User user){
+//        userServiceImpl.updateUser(user);
+//        return "redirect:/";
+//    }
+//
+//    @DeleteMapping(value = "/user/{id}")
+//    public String removeUser(@PathVariable("id") int id) {
+//        userServiceImpl.removeUser(id);
+//        return "redirect:/";
+//    }
 }
 

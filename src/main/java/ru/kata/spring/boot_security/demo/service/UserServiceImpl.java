@@ -15,7 +15,6 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,8 +63,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Transactional(readOnly = true)
     public User showUser(int id) {
-        User user = userRepository.getOne(id);
-        return user;
+        return userRepository.findById(id).get();
     }
 
     @Transactional
